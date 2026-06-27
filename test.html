@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head><title>Image Test</title></head>
+<body>
+<h1>Testing Image Path</h1>
+<img src="images/haridwar-hero.jpg" alt="Test" style="max-width: 100%;">
+<script>
+document.querySelector('img').onload = () => console.log('Image loaded successfully!');
+document.querySelector('img').onerror = () => console.error('Image failed to load!');
+</script>
+</body>
+</html>
