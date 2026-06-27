@@ -14,6 +14,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <!-- Tailwind Custom Configuration -->
     <script>
         tailwind.config = {
@@ -45,18 +48,79 @@
             font-family: 'Cormorant Garamond', serif;
         }
 
+        /* Mobile-first optimizations */
+        @media (max-width: 768px) {
+            /* Disable parallax on mobile for better performance */
+            #parallax-image {
+                transform: none !important;
+            }
+
+            /* Better mobile spacing */
+            .mobile-spacing {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            /* Prevent text overflow on small screens */
+            h1 {
+                font-size: 2.5rem !important;
+                line-height: 1.2 !important;
+            }
+        }
+
+        /* Parallax effect - desktop only */
+        @media (min-width: 769px) {
+            .parallax {
+                background-attachment: fixed;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        }
+
         /* Custom animations */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-20px); }
         }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         .float-animation {
-            animation: float 3s ease-in-out infinite;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .scale-in {
+            animation: scaleIn 0.6s ease-out forwards;
         }
 
         /* Gradient overlay */
         .hero-overlay {
-            background: linear-gradient(135deg, rgba(255, 153, 51, 0.3) 0%, rgba(30, 95, 116, 0.6) 100%);
+            background: linear-gradient(135deg, rgba(255, 153, 51, 0.4) 0%, rgba(30, 95, 116, 0.7) 100%);
         }
 
         /* Pattern background */
@@ -64,18 +128,98 @@
             background-image:
                 repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,153,51,.03) 35px, rgba(255,153,51,.03) 70px);
         }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Image zoom on hover */
+        .image-zoom-container {
+            overflow: hidden;
+        }
+
+        .image-zoom {
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .image-zoom-container:hover .image-zoom {
+            transform: scale(1.15);
+        }
+
+        /* Stagger animation delay */
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+
+        /* Counter animation */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Smooth scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #FFF8F0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FF9933;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C8654A;
+        }
+
+        /* Video overlay */
+        .video-overlay {
+            background: linear-gradient(180deg, rgba(44, 24, 16, 0.3) 0%, rgba(44, 24, 16, 0.8) 100%);
+        }
+
+        /* Shine effect on hover */
+        .shine {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .shine:hover::before {
+            left: 100%;
+        }
     </style>
 </head>
 
 <body class="bg-warmwhite text-darkwood font-body antialiased">
 
     <!-- ===== STICKY NAVIGATION ===== -->
-    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50 border-b border-saffron/20">
+    <nav id="navbar" class="fixed top-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50 border-b border-saffron/20 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
-                <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-gradient-to-br from-saffron to-terracotta rounded-full flex items-center justify-center">
+                <div class="flex items-center space-x-3" data-aos="fade-right">
+                    <div class="w-12 h-12 bg-gradient-to-br from-saffron to-terracotta rounded-full flex items-center justify-center transform hover:rotate-12 transition-transform duration-300">
                         <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/>
                             <circle cx="12" cy="14" r="3"/>
@@ -88,12 +232,24 @@
                 </div>
 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-darkwood hover:text-saffron transition-colors font-medium">Home</a>
-                    <a href="#rooms" class="text-darkwood hover:text-saffron transition-colors font-medium">Rooms</a>
-                    <a href="#experiences" class="text-darkwood hover:text-saffron transition-colors font-medium">Experiences</a>
-                    <a href="#gallery" class="text-darkwood hover:text-saffron transition-colors font-medium">Gallery</a>
-                    <a href="#contact" class="bg-saffron text-white px-6 py-2.5 rounded-full hover:bg-terracotta transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 font-semibold">
+                <div class="hidden md:flex items-center space-x-8" data-aos="fade-left">
+                    <a href="#home" class="text-darkwood hover:text-saffron transition-colors font-medium relative group">
+                        Home
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-saffron group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#rooms" class="text-darkwood hover:text-saffron transition-colors font-medium relative group">
+                        Rooms
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-saffron group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#experiences" class="text-darkwood hover:text-saffron transition-colors font-medium relative group">
+                        Experiences
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-saffron group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#gallery" class="text-darkwood hover:text-saffron transition-colors font-medium relative group">
+                        Gallery
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-saffron group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#contact" class="bg-saffron text-white px-6 py-2.5 rounded-full hover:bg-terracotta transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 font-semibold shine">
                         Book Now
                     </a>
                 </div>
@@ -119,39 +275,53 @@
         </div>
     </nav>
 
-    <!-- ===== HERO SECTION ===== -->
+    <!-- ===== HERO SECTION WITH PARALLAX ===== -->
     <section id="home" class="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden mt-20">
-        <!-- Background Image -->
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1609920658906-8223bd289001?w=1920&q=80"
-                 alt="Ganges River in Haridwar at sunset"
-                 class="w-full h-full object-cover">
+        <!-- Background Image with Parallax -->
+        <div class="absolute inset-0 z-0" id="hero-bg">
+            <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1920&q=80"
+                 alt="Ganga Aarti ceremony at Har Ki Pauri, Haridwar"
+                 class="w-full h-full object-cover"
+                 id="parallax-image">
             <div class="absolute inset-0 hero-overlay"></div>
+        </div>
+
+        <!-- Floating particles -->
+        <div class="absolute inset-0 z-5 pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-gold/30 rounded-full float-animation"></div>
+            <div class="absolute top-1/3 right-1/3 w-3 h-3 bg-saffron/20 rounded-full float-animation" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-2 h-2 bg-gold/40 rounded-full float-animation" style="animation-delay: 2s;"></div>
         </div>
 
         <!-- Hero Content -->
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
             <!-- Decorative Element -->
-            <div class="inline-block mb-6 float-animation">
+            <div class="inline-block mb-6 float-animation" data-aos="zoom-in">
                 <div class="w-16 h-16 border-2 border-gold rounded-full flex items-center justify-center">
                     <div class="w-2 h-2 bg-gold rounded-full"></div>
                 </div>
             </div>
 
-            <h1 class="font-heading text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+            <h1 class="font-heading text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
+                data-aos="fade-up"
+                data-aos-duration="1000">
                 Where The Ganges<br/>
-                <span class="text-gold">Whispers</span> and<br/>
-                Tradition <span class="text-saffron">Breathes</span>
+                <span class="text-gold" data-aos="fade-up" data-aos-delay="200">Whispers</span> and<br/>
+                Tradition <span class="text-saffron" data-aos="fade-up" data-aos-delay="400">Breathes</span>
             </h1>
 
-            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light text-white/90 leading-relaxed">
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light text-white/90 leading-relaxed"
+               data-aos="fade-up"
+               data-aos-delay="600">
                 Experience Haridwar's spiritual essence in heritage luxury.<br class="hidden md:block"/>
                 Wake to temple bells, meditate by the sacred river, and discover<br class="hidden md:block"/>
                 your inner peace in our traditionally-crafted sanctuary.
             </p>
 
             <!-- Trust Badges -->
-            <div class="flex flex-wrap justify-center items-center gap-6 mb-10 text-sm">
+            <div class="flex flex-wrap justify-center items-center gap-6 mb-10 text-sm"
+                 data-aos="fade-up"
+                 data-aos-delay="800">
                 <div class="flex items-center space-x-2">
                     <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
@@ -173,68 +343,82 @@
             </div>
 
             <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="#contact" class="group bg-saffron text-white px-10 py-4 rounded-full hover:bg-gold transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 font-semibold text-lg flex items-center space-x-2">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                 data-aos="zoom-in"
+                 data-aos-delay="1000">
+                <a href="#contact" class="group bg-saffron text-white px-10 py-4 rounded-full hover:bg-gold transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 font-semibold text-lg flex items-center space-x-2 shine">
                     <span>Begin Your Sacred Journey</span>
                     <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                     </svg>
                 </a>
-                <a href="#rooms" class="bg-white/20 backdrop-blur-sm text-white px-10 py-4 rounded-full hover:bg-white/30 transition-all border-2 border-white/50 font-semibold text-lg">
+                <a href="#rooms" class="bg-white/20 backdrop-blur-sm text-white px-10 py-4 rounded-full hover:bg-white/30 transition-all border-2 border-white/50 font-semibold text-lg transform hover:scale-105">
                     Explore Rooms
                 </a>
             </div>
         </div>
 
-        <!-- Floating Booking Widget -->
-        <div class="absolute bottom-0 left-0 right-0 z-20 hidden lg:block">
-            <div class="max-w-5xl mx-auto px-4 transform translate-y-1/2">
-                <div class="bg-white rounded-2xl shadow-2xl p-6 pattern-bg">
-                    <div class="grid grid-cols-4 gap-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-darkwood mb-2">Check In</label>
-                            <input type="date" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-saffron focus:outline-none transition-colors">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-darkwood mb-2">Check Out</label>
-                            <input type="date" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-saffron focus:outline-none transition-colors">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-darkwood mb-2">Guests</label>
-                            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-saffron focus:outline-none transition-colors appearance-none bg-white">
-                                <option>1 Guest</option>
-                                <option>2 Guests</option>
-                                <option>3 Guests</option>
-                                <option>4+ Guests</option>
-                            </select>
-                        </div>
-                        <div class="flex items-end">
-                            <button class="w-full bg-gradient-to-r from-saffron to-terracotta text-white py-3 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-0.5 transition-all">
-                                Check Availability
-                            </button>
-                        </div>
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce" data-aos="fade-up" data-aos-delay="1200">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ===== STATS COUNTER SECTION ===== -->
+    <section class="py-16 bg-gradient-to-r from-ganges to-saffron">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 text-center text-white">
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-5xl font-bold font-heading mb-2">
+                        <span class="counter" data-target="15">0</span>+
                     </div>
+                    <p class="text-white/90">Years of Service</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-5xl font-bold font-heading mb-2">
+                        <span class="counter" data-target="5000">0</span>+
+                    </div>
+                    <p class="text-white/90">Happy Guests</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-5xl font-bold font-heading mb-2">
+                        <span class="counter" data-target="25">0</span>
+                    </div>
+                    <p class="text-white/90">Luxury Rooms</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-5xl font-bold font-heading mb-2">
+                        <span class="counter" data-target="98">0</span>%
+                    </div>
+                    <p class="text-white/90">Satisfaction Rate</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ===== SACRED EXPERIENCE OVERVIEW ===== -->
-    <section class="py-24 lg:pt-40 bg-white">
+    <section class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4"
+                    data-aos="fade-up">
                     A Sanctuary of <span class="text-saffron">Spiritual Luxury</span>
                 </h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto"
+                   data-aos="fade-up"
+                   data-aos-delay="100">
                     Immerse yourself in the divine energy of Haridwar while experiencing world-class comfort and authentic cultural heritage
                 </p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="group text-center p-8 rounded-2xl hover:bg-warmwhite transition-all duration-300">
-                    <div class="w-20 h-20 bg-gradient-to-br from-saffron/20 to-terracotta/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <div class="group text-center p-8 rounded-2xl hover:bg-warmwhite transition-all duration-300"
+                     data-aos="flip-left"
+                     data-aos-delay="100">
+                    <div class="w-20 h-20 bg-gradient-to-br from-saffron/20 to-terracotta/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-10 h-10 text-saffron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
                         </svg>
@@ -246,8 +430,10 @@
                 </div>
 
                 <!-- Feature 2 -->
-                <div class="group text-center p-8 rounded-2xl hover:bg-warmwhite transition-all duration-300">
-                    <div class="w-20 h-20 bg-gradient-to-br from-ganges/20 to-saffron/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <div class="group text-center p-8 rounded-2xl hover:bg-warmwhite transition-all duration-300"
+                     data-aos="flip-left"
+                     data-aos-delay="200">
+                    <div class="w-20 h-20 bg-gradient-to-br from-ganges/20 to-saffron/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-10 h-10 text-ganges" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
@@ -259,8 +445,10 @@
                 </div>
 
                 <!-- Feature 3 -->
-                <div class="group text-center p-8 rounded-2xl hover:bg-warmwhite transition-all duration-300">
-                    <div class="w-20 h-20 bg-gradient-to-br from-gold/20 to-ganges/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <div class="group text-center p-8 rounded-2xl hover:bg-warmwhite transition-all duration-300"
+                     data-aos="flip-left"
+                     data-aos-delay="300">
+                    <div class="w-20 h-20 bg-gradient-to-br from-gold/20 to-ganges/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-10 h-10 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
                         </svg>
@@ -274,26 +462,31 @@
         </div>
     </section>
 
-    <!-- ===== FEATURED ROOMS ===== -->
+    <!-- ===== FEATURED ROOMS WITH STAGGER ANIMATION ===== -->
     <section id="rooms" class="py-24 bg-warmwhite pattern-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4"
+                    data-aos="fade-up">
                     Our <span class="text-saffron">Sacred Sanctuaries</span>
                 </h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto"
+                   data-aos="fade-up"
+                   data-aos-delay="100">
                     Each room is a masterpiece of traditional craftsmanship, offering serene views and unmatched comfort
                 </p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Room Card 1 -->
-                <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="relative h-64 overflow-hidden">
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+                     data-aos="fade-up"
+                     data-aos-delay="100">
+                    <div class="relative h-64 overflow-hidden image-zoom-container">
                         <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80"
                              alt="Ganges View Suite"
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute top-4 right-4 bg-saffron text-white px-4 py-2 rounded-full text-sm font-semibold">
+                             class="w-full h-full object-cover image-zoom">
+                        <div class="absolute top-4 right-4 bg-saffron text-white px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform">
                             Premium
                         </div>
                     </div>
@@ -323,7 +516,7 @@
                                 <span class="text-2xl font-bold text-saffron">₹4,999</span>
                                 <span class="text-gray-500 text-sm">/night</span>
                             </div>
-                            <a href="#contact" class="bg-ganges text-white px-6 py-2 rounded-full hover:bg-saffron transition-colors font-semibold">
+                            <a href="#contact" class="bg-ganges text-white px-6 py-2 rounded-full hover:bg-saffron transition-colors font-semibold transform hover:scale-105 shine">
                                 Book Now
                             </a>
                         </div>
@@ -331,12 +524,14 @@
                 </div>
 
                 <!-- Room Card 2 -->
-                <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="relative h-64 overflow-hidden">
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+                     data-aos="fade-up"
+                     data-aos-delay="200">
+                    <div class="relative h-64 overflow-hidden image-zoom-container">
                         <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80"
                              alt="Heritage Room"
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute top-4 right-4 bg-terracotta text-white px-4 py-2 rounded-full text-sm font-semibold">
+                             class="w-full h-full object-cover image-zoom">
+                        <div class="absolute top-4 right-4 bg-terracotta text-white px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform">
                             Popular
                         </div>
                     </div>
@@ -366,7 +561,7 @@
                                 <span class="text-2xl font-bold text-saffron">₹3,499</span>
                                 <span class="text-gray-500 text-sm">/night</span>
                             </div>
-                            <a href="#contact" class="bg-ganges text-white px-6 py-2 rounded-full hover:bg-saffron transition-colors font-semibold">
+                            <a href="#contact" class="bg-ganges text-white px-6 py-2 rounded-full hover:bg-saffron transition-colors font-semibold transform hover:scale-105 shine">
                                 Book Now
                             </a>
                         </div>
@@ -374,12 +569,14 @@
                 </div>
 
                 <!-- Room Card 3 -->
-                <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="relative h-64 overflow-hidden">
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+                     data-aos="fade-up"
+                     data-aos-delay="300">
+                    <div class="relative h-64 overflow-hidden image-zoom-container">
                         <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80"
                              alt="Family Sanctuary"
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute top-4 right-4 bg-gold text-white px-4 py-2 rounded-full text-sm font-semibold">
+                             class="w-full h-full object-cover image-zoom">
+                        <div class="absolute top-4 right-4 bg-gold text-white px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform">
                             Spacious
                         </div>
                     </div>
@@ -409,7 +606,7 @@
                                 <span class="text-2xl font-bold text-saffron">₹7,999</span>
                                 <span class="text-gray-500 text-sm">/night</span>
                             </div>
-                            <a href="#contact" class="bg-ganges text-white px-6 py-2 rounded-full hover:bg-saffron transition-colors font-semibold">
+                            <a href="#contact" class="bg-ganges text-white px-6 py-2 rounded-full hover:bg-saffron transition-colors font-semibold transform hover:scale-105 shine">
                                 Book Now
                             </a>
                         </div>
@@ -417,7 +614,7 @@
                 </div>
             </div>
 
-            <div class="text-center mt-12">
+            <div class="text-center mt-12" data-aos="fade-up">
                 <a href="#contact" class="inline-flex items-center space-x-2 text-ganges hover:text-saffron font-semibold text-lg group">
                     <span>View All Accommodations</span>
                     <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -428,31 +625,36 @@
         </div>
     </section>
 
-    <!-- ===== EXPERIENCES ===== -->
+    <!-- ===== EXPERIENCES WITH IMAGE OVERLAYS ===== -->
     <section id="experiences" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4"
+                    data-aos="fade-up">
                     Spiritual <span class="text-saffron">Experiences</span>
                 </h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto"
+                   data-aos="fade-up"
+                   data-aos-delay="100">
                     Curated activities to deepen your connection with ancient traditions and inner peace
                 </p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Experience 1 -->
-                <div class="relative rounded-2xl overflow-hidden h-80 group">
+                <div class="relative rounded-2xl overflow-hidden h-80 group image-zoom-container"
+                     data-aos="fade-right"
+                     data-aos-delay="100">
                     <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80"
                          alt="Ganga Aarti ceremony"
-                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-darkwood/90 via-darkwood/50 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                         class="w-full h-full object-cover image-zoom">
+                    <div class="absolute inset-0 bg-gradient-to-t from-darkwood/90 via-darkwood/50 to-transparent group-hover:from-saffron/90 transition-all duration-500"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white transform group-hover:-translate-y-2 transition-transform duration-300">
                         <h3 class="font-heading text-3xl font-bold mb-3">Ganga Aarti Experience</h3>
                         <p class="mb-4 text-white/90">
                             Witness the mesmerizing evening ceremony at Har Ki Pauri. Guided tour with reserved seating.
                         </p>
-                        <a href="#contact" class="inline-flex items-center space-x-2 text-gold hover:text-saffron font-semibold group/link">
+                        <a href="#contact" class="inline-flex items-center space-x-2 text-gold hover:text-white font-semibold group/link">
                             <span>Learn More</span>
                             <svg class="w-4 h-4 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -462,17 +664,19 @@
                 </div>
 
                 <!-- Experience 2 -->
-                <div class="relative rounded-2xl overflow-hidden h-80 group">
+                <div class="relative rounded-2xl overflow-hidden h-80 group image-zoom-container"
+                     data-aos="fade-left"
+                     data-aos-delay="200">
                     <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=800&q=80"
                          alt="Yoga and meditation session"
-                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-darkwood/90 via-darkwood/50 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                         class="w-full h-full object-cover image-zoom">
+                    <div class="absolute inset-0 bg-gradient-to-t from-darkwood/90 via-darkwood/50 to-transparent group-hover:from-ganges/90 transition-all duration-500"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white transform group-hover:-translate-y-2 transition-transform duration-300">
                         <h3 class="font-heading text-3xl font-bold mb-3">Sunrise Yoga by Ganges</h3>
                         <p class="mb-4 text-white/90">
                             Begin your day with transformative yoga and meditation as the sun rises over the sacred river.
                         </p>
-                        <a href="#contact" class="inline-flex items-center space-x-2 text-gold hover:text-saffron font-semibold group/link">
+                        <a href="#contact" class="inline-flex items-center space-x-2 text-gold hover:text-white font-semibold group/link">
                             <span>Learn More</span>
                             <svg class="w-4 h-4 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -482,17 +686,19 @@
                 </div>
 
                 <!-- Experience 3 -->
-                <div class="relative rounded-2xl overflow-hidden h-80 group">
+                <div class="relative rounded-2xl overflow-hidden h-80 group image-zoom-container"
+                     data-aos="fade-right"
+                     data-aos-delay="300">
                     <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80"
                          alt="Temple tour"
-                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-darkwood/90 via-darkwood/50 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                         class="w-full h-full object-cover image-zoom">
+                    <div class="absolute inset-0 bg-gradient-to-t from-darkwood/90 via-darkwood/50 to-transparent group-hover:from-terracotta/90 transition-all duration-500"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white transform group-hover:-translate-y-2 transition-transform duration-300">
                         <h3 class="font-heading text-3xl font-bold mb-3">Sacred Temple Walk</h3>
                         <p class="mb-4 text-white/90">
                             Guided tour through ancient temples. Learn the history, rituals, and spiritual significance.
                         </p>
-                        <a href="#contact" class="inline-flex items-center space-x-2 text-gold hover:text-saffron font-semibold group/link">
+                        <a href="#contact" class="inline-flex items-center space-x-2 text-gold hover:text-white font-semibold group/link">
                             <span>Learn More</span>
                             <svg class="w-4 h-4 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -502,17 +708,19 @@
                 </div>
 
                 <!-- Experience 4 -->
-                <div class="relative rounded-2xl overflow-hidden h-80 group">
+                <div class="relative rounded-2xl overflow-hidden h-80 group image-zoom-container"
+                     data-aos="fade-left"
+                     data-aos-delay="400">
                     <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=800&q=80"
                          alt="Ayurvedic treatment"
-                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-darkwood/90 via-darkwood/50 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                         class="w-full h-full object-cover image-zoom">
+                    <div class="absolute inset-0 bg-gradient-to-t from-darkwood/90 via-darkwood/50 to-transparent group-hover:from-gold/90 transition-all duration-500"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white transform group-hover:-translate-y-2 transition-transform duration-300">
                         <h3 class="font-heading text-3xl font-bold mb-3">Ayurvedic Healing</h3>
                         <p class="mb-4 text-white/90">
                             Personalized wellness consultations and treatments using 5000-year-old healing traditions.
                         </p>
-                        <a href="#contact" class="inline-flex items-center space-x-2 text-gold hover:text-saffron font-semibold group/link">
+                        <a href="#contact" class="inline-flex items-center space-x-2 text-gold hover:text-white font-semibold group/link">
                             <span>Learn More</span>
                             <svg class="w-4 h-4 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -528,17 +736,22 @@
     <section class="py-24 bg-warmwhite pattern-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4"
+                    data-aos="fade-up">
                     Words from Our <span class="text-saffron">Guests</span>
                 </h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto"
+                   data-aos="fade-up"
+                   data-aos-delay="100">
                     Discover why travelers choose Ganga Heritage for their spiritual journey
                 </p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Testimonial 1 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                     data-aos="zoom-in"
+                     data-aos-delay="100">
                     <div class="flex items-center mb-4">
                         <div class="flex space-x-1 text-gold">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
@@ -559,7 +772,7 @@
                         </div>
                     </div>
                     <p class="text-gray-700 mb-6 italic">
-                        "This place transformed my understanding of spirituality. The Ganges view from my room, the morning yoga sessions, and the peaceful atmosphere created the perfect environment for introspection. A truly sacred experience."
+                        "This place transformed my understanding of spirituality. The Ganges view from my room, the morning yoga sessions, and the peaceful atmosphere created the perfect environment for introspection."
                     </p>
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-gradient-to-br from-saffron to-gold rounded-full flex items-center justify-center text-white font-bold mr-4">
@@ -573,7 +786,9 @@
                 </div>
 
                 <!-- Testimonial 2 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                     data-aos="zoom-in"
+                     data-aos-delay="200">
                     <div class="flex items-center mb-4">
                         <div class="flex space-x-1 text-gold">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
@@ -594,7 +809,7 @@
                         </div>
                     </div>
                     <p class="text-gray-700 mb-6 italic">
-                        "Authenticity at its finest! The traditional architecture, the Ayurvedic treatments, and proximity to Har Ki Pauri made our pilgrimage unforgettable. The staff's warmth and knowledge of local traditions added immense value."
+                        "Authenticity at its finest! The traditional architecture, the Ayurvedic treatments, and proximity to Har Ki Pauri made our pilgrimage unforgettable. The staff's warmth and knowledge added immense value."
                     </p>
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-gradient-to-br from-ganges to-saffron rounded-full flex items-center justify-center text-white font-bold mr-4">
@@ -608,7 +823,9 @@
                 </div>
 
                 <!-- Testimonial 3 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                     data-aos="zoom-in"
+                     data-aos-delay="300">
                     <div class="flex items-center mb-4">
                         <div class="flex space-x-1 text-gold">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
@@ -629,7 +846,7 @@
                         </div>
                     </div>
                     <p class="text-gray-700 mb-6 italic">
-                        "A perfect blend of tradition and luxury. The family sanctuary was spacious, beautifully decorated, and had all modern amenities. Our children loved the cultural programs, and we appreciated the vegetarian cuisine quality."
+                        "A perfect blend of tradition and luxury. The family sanctuary was spacious, beautifully decorated, and had all modern amenities. Our children loved the cultural programs."
                     </p>
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-gradient-to-br from-terracotta to-gold rounded-full flex items-center justify-center text-white font-bold mr-4">
@@ -649,34 +866,45 @@
     <section id="gallery" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4"
+                    data-aos="fade-up">
                     Visual <span class="text-saffron">Journey</span>
                 </h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto"
+                   data-aos="fade-up"
+                   data-aos-delay="100">
                     Glimpses of peace, tradition, and luxury awaiting you
                 </p>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="h-64 rounded-xl overflow-hidden">
+                <div class="h-64 rounded-xl overflow-hidden image-zoom-container"
+                     data-aos="zoom-in"
+                     data-aos-delay="100">
                     <img src="https://images.unsplash.com/photo-1626339247239-0c41e20a8057?w=600&q=80"
                          alt="Hotel exterior"
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                         class="w-full h-full object-cover image-zoom">
                 </div>
-                <div class="h-64 rounded-xl overflow-hidden">
+                <div class="h-64 rounded-xl overflow-hidden image-zoom-container"
+                     data-aos="zoom-in"
+                     data-aos-delay="200">
                     <img src="https://images.unsplash.com/photo-1599619351208-3e6906c29986?w=600&q=80"
                          alt="Interior design"
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                         class="w-full h-full object-cover image-zoom">
                 </div>
-                <div class="h-64 rounded-xl overflow-hidden">
+                <div class="h-64 rounded-xl overflow-hidden image-zoom-container"
+                     data-aos="zoom-in"
+                     data-aos-delay="300">
                     <img src="https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=600&q=80"
                          alt="Dining area"
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                         class="w-full h-full object-cover image-zoom">
                 </div>
-                <div class="h-64 rounded-xl overflow-hidden">
+                <div class="h-64 rounded-xl overflow-hidden image-zoom-container"
+                     data-aos="zoom-in"
+                     data-aos-delay="400">
                     <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=600&q=80"
                          alt="Yoga session"
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                         class="w-full h-full object-cover image-zoom">
                 </div>
             </div>
         </div>
@@ -687,7 +915,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <!-- Left Column - Info -->
-                <div class="text-white">
+                <div class="text-white" data-aos="fade-right">
                     <h2 class="font-heading text-4xl md:text-5xl font-bold mb-6">
                         Begin Your Sacred Journey Today
                     </h2>
@@ -736,7 +964,8 @@
                 </div>
 
                 <!-- Right Column - Booking Form -->
-                <div class="bg-white rounded-2xl p-8 shadow-2xl">
+                <div class="bg-white rounded-2xl p-8 shadow-2xl"
+                     data-aos="fade-left">
                     <h3 class="font-heading text-3xl font-bold text-ganges mb-6">Book Your Stay</h3>
 
                     <form class="space-y-4">
@@ -786,7 +1015,7 @@
                             <textarea rows="3" placeholder="Any special requirements or preferences..." class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-saffron focus:outline-none transition-colors resize-none"></textarea>
                         </div>
 
-                        <button type="submit" class="w-full bg-gradient-to-r from-saffron to-terracotta text-white py-4 rounded-lg font-semibold text-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
+                        <button type="submit" class="w-full bg-gradient-to-r from-saffron to-terracotta text-white py-4 rounded-lg font-semibold text-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all shine">
                             Submit Booking Request
                         </button>
 
@@ -804,7 +1033,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8 mb-8">
                 <!-- Column 1 - Brand -->
-                <div>
+                <div data-aos="fade-up" data-aos-delay="100">
                     <div class="flex items-center space-x-3 mb-4">
                         <div class="w-10 h-10 bg-gradient-to-br from-saffron to-terracotta rounded-full flex items-center justify-center">
                             <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -823,7 +1052,7 @@
                 </div>
 
                 <!-- Column 2 - Quick Links -->
-                <div>
+                <div data-aos="fade-up" data-aos-delay="200">
                     <h4 class="font-heading text-lg font-bold mb-4">Quick Links</h4>
                     <ul class="space-y-2 text-sm">
                         <li><a href="#rooms" class="text-white/70 hover:text-saffron transition-colors">Rooms & Suites</a></li>
@@ -834,7 +1063,7 @@
                 </div>
 
                 <!-- Column 3 - Experiences -->
-                <div>
+                <div data-aos="fade-up" data-aos-delay="300">
                     <h4 class="font-heading text-lg font-bold mb-4">Our Offerings</h4>
                     <ul class="space-y-2 text-sm">
                         <li><a href="#" class="text-white/70 hover:text-saffron transition-colors">Yoga & Meditation</a></li>
@@ -845,7 +1074,7 @@
                 </div>
 
                 <!-- Column 4 - Newsletter -->
-                <div>
+                <div data-aos="fade-up" data-aos-delay="400">
                     <h4 class="font-heading text-lg font-bold mb-4">Stay Connected</h4>
                     <p class="text-white/70 text-sm mb-4">
                         Subscribe to receive special offers and spiritual insights
@@ -865,17 +1094,17 @@
                     © 2026 Ganga Heritage. All rights reserved. Crafted with devotion.
                 </p>
                 <div class="flex space-x-6">
-                    <a href="#" class="text-white/60 hover:text-saffron transition-colors">
+                    <a href="#" class="text-white/60 hover:text-saffron transition-colors transform hover:scale-110">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                         </svg>
                     </a>
-                    <a href="#" class="text-white/60 hover:text-saffron transition-colors">
+                    <a href="#" class="text-white/60 hover:text-saffron transition-colors transform hover:scale-110">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                         </svg>
                     </a>
-                    <a href="#" class="text-white/60 hover:text-saffron transition-colors">
+                    <a href="#" class="text-white/60 hover:text-saffron transition-colors transform hover:scale-110">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                         </svg>
@@ -885,8 +1114,19 @@
         </div>
     </footer>
 
+    <!-- ===== AOS ANIMATION LIBRARY ===== -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <!-- ===== JAVASCRIPT ===== -->
     <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+
         // Mobile menu toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -905,14 +1145,13 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    // Close mobile menu if open
                     mobileMenu.classList.add('hidden');
                 }
             });
         });
 
         // Navbar background on scroll
-        const nav = document.querySelector('nav');
+        const nav = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 100) {
                 nav.classList.add('shadow-xl');
@@ -920,6 +1159,68 @@
                 nav.classList.remove('shadow-xl');
             }
         });
+
+        // Parallax effect for hero image
+        const parallaxImage = document.getElementById('parallax-image');
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = scrolled * 0.5;
+            if (parallaxImage) {
+                parallaxImage.style.transform = `translateY(${parallax}px)`;
+            }
+        });
+
+        // Counter animation
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+        let hasAnimated = false;
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / speed;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(() => animateCounters(), 1);
+                } else {
+                    counter.innerText = target;
+                }
+            });
+        };
+
+        // Trigger counter animation when in viewport
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !hasAnimated) {
+                    hasAnimated = true;
+                    animateCounters();
+                }
+            });
+        }, observerOptions);
+
+        const statsSection = document.querySelector('.counter').closest('section');
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
+
+        // Reveal elements on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
     </script>
 
 </body>
