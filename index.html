@@ -23,13 +23,22 @@
             theme: {
                 extend: {
                     colors: {
-                        saffron: '#FF9933',
-                        terracotta: '#C8654A',
-                        ganges: '#1E5F74',
-                        gold: '#D4AF37',
-                        darkwood: '#2C1810',
-                        warmwhite: '#FFF8F0',
-                        tulsi: '#2D5016'
+                        // Enhanced vibrant cultural palette
+                        saffron: '#FF6B35',        // Bright vibrant saffron
+                        'saffron-dark': '#E85D25',  // Deeper saffron
+                        terracotta: '#D4512D',      // Rich terracotta
+                        ganges: '#006B7D',          // Deep teal (Ganges water)
+                        'ganges-light': '#00A5BB',  // Lighter teal
+                        gold: '#FFB800',            // Bright divine gold
+                        'gold-dark': '#D4960C',     // Deeper gold
+                        maroon: '#880E4F',          // Traditional maroon
+                        burgundy: '#A21C4C',        // Rich burgundy
+                        darkwood: '#2C1810',        // Deep wood
+                        ivory: '#FFFEF2',           // Soft ivory
+                        cream: '#FFF9E5',           // Warm cream
+                        sage: '#8FBD8B',            // Soft green
+                        lotus: '#FFE5EC',           // Lotus pink
+                        'temple-red': '#C41E3A'     // Temple red
                     },
                     fontFamily: {
                         heading: ['Cormorant Garamond', 'serif'],
@@ -43,6 +52,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #FFFEF2 0%, #FFF9E5 100%);
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Cormorant Garamond', serif;
@@ -118,15 +128,19 @@
             animation: scaleIn 0.6s ease-out forwards;
         }
 
-        /* Gradient overlay */
+        /* Gradient overlay - Enhanced with vibrant colors */
         .hero-overlay {
-            background: linear-gradient(135deg, rgba(255, 153, 51, 0.4) 0%, rgba(30, 95, 116, 0.7) 100%);
+            background: linear-gradient(135deg,
+                rgba(255, 107, 53, 0.3) 0%,      /* Vibrant saffron */
+                rgba(136, 14, 79, 0.5) 50%,      /* Maroon */
+                rgba(0, 107, 125, 0.7) 100%);    /* Deep Ganges */
         }
 
-        /* Pattern background */
+        /* Pattern background - Enhanced */
         .pattern-bg {
+            background: linear-gradient(135deg, #FFFEF2 0%, #FFE5EC 100%);
             background-image:
-                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,153,51,.03) 35px, rgba(255,153,51,.03) 70px);
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,107,53,.05) 35px, rgba(255,107,53,.05) 70px);
         }
 
         /* Scroll reveal */
@@ -165,22 +179,22 @@
             font-variant-numeric: tabular-nums;
         }
 
-        /* Smooth scrollbar */
+        /* Smooth scrollbar - Enhanced colors */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 12px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #FFF8F0;
+            background: linear-gradient(180deg, #FFFEF2, #FFE5EC);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #FF9933;
-            border-radius: 5px;
+            background: linear-gradient(180deg, #FF6B35, #880E4F);
+            border-radius: 6px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #C8654A;
+            background: linear-gradient(180deg, #FFB800, #C41E3A);
         }
 
         /* Video overlay */
@@ -214,12 +228,12 @@
 <body class="bg-warmwhite text-darkwood font-body antialiased">
 
     <!-- ===== STICKY NAVIGATION ===== -->
-    <nav id="navbar" class="fixed top-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50 border-b border-saffron/20 transition-all duration-300">
+    <nav id="navbar" class="fixed top-0 w-full bg-gradient-to-r from-ivory to-cream backdrop-blur-md shadow-lg z-50 border-b-2 border-gold/30 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3" data-aos="fade-right">
-                    <div class="w-12 h-12 bg-gradient-to-br from-saffron to-terracotta rounded-full flex items-center justify-center transform hover:rotate-12 transition-transform duration-300">
+                    <div class="w-12 h-12 bg-gradient-to-br from-saffron via-maroon to-ganges rounded-full flex items-center justify-center transform hover:rotate-12 transition-transform duration-300 shadow-lg">
                         <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/>
                             <circle cx="12" cy="14" r="3"/>
@@ -249,7 +263,7 @@
                         Gallery
                         <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-saffron group-hover:w-full transition-all duration-300"></span>
                     </a>
-                    <a href="#contact" class="bg-saffron text-white px-6 py-2.5 rounded-full hover:bg-terracotta transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 font-semibold shine">
+                    <a href="#contact" class="bg-gradient-to-r from-saffron to-temple-red text-white px-6 py-2.5 rounded-full hover:from-maroon hover:to-burgundy transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 font-semibold shine">
                         Book Now
                     </a>
                 </div>
@@ -346,7 +360,7 @@
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center"
                  data-aos="zoom-in"
                  data-aos-delay="1000">
-                <a href="#contact" class="group bg-saffron text-white px-10 py-4 rounded-full hover:bg-gold transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 font-semibold text-lg flex items-center space-x-2 shine">
+                <a href="#contact" class="group bg-gradient-to-r from-saffron via-temple-red to-maroon text-white px-10 py-4 rounded-full hover:from-gold hover:via-saffron hover:to-temple-red transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 font-semibold text-lg flex items-center space-x-2 shine">
                     <span>Begin Your Sacred Journey</span>
                     <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -367,7 +381,9 @@
     </section>
 
     <!-- ===== STATS COUNTER SECTION ===== -->
-    <section class="py-16 bg-gradient-to-r from-ganges to-saffron">
+    <section class="py-16 bg-gradient-to-r from-ganges via-maroon to-saffron relative overflow-hidden">
+        <!-- Decorative overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8 text-center text-white">
                 <div data-aos="fade-up" data-aos-delay="100">
@@ -399,7 +415,7 @@
     </section>
 
     <!-- ===== SACRED EXPERIENCE OVERVIEW ===== -->
-    <section class="py-24 bg-white">
+    <section class="py-24 bg-gradient-to-b from-ivory to-lotus">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4"
@@ -415,7 +431,7 @@
 
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="group text-center p-8 rounded-2xl hover:bg-warmwhite transition-all duration-300"
+                <div class="group text-center p-8 rounded-2xl bg-white/50 hover:bg-white hover:shadow-xl transition-all duration-300 border border-gold/10"
                      data-aos="flip-left"
                      data-aos-delay="100">
                     <div class="w-20 h-20 bg-gradient-to-br from-saffron/20 to-terracotta/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -430,7 +446,7 @@
                 </div>
 
                 <!-- Feature 2 -->
-                <div class="group text-center p-8 rounded-2xl hover:bg-warmwhite transition-all duration-300"
+                <div class="group text-center p-8 rounded-2xl bg-white/50 hover:bg-white hover:shadow-xl transition-all duration-300 border border-gold/10"
                      data-aos="flip-left"
                      data-aos-delay="200">
                     <div class="w-20 h-20 bg-gradient-to-br from-ganges/20 to-saffron/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -445,7 +461,7 @@
                 </div>
 
                 <!-- Feature 3 -->
-                <div class="group text-center p-8 rounded-2xl hover:bg-warmwhite transition-all duration-300"
+                <div class="group text-center p-8 rounded-2xl bg-white/50 hover:bg-white hover:shadow-xl transition-all duration-300 border border-gold/10"
                      data-aos="flip-left"
                      data-aos-delay="300">
                     <div class="w-20 h-20 bg-gradient-to-br from-gold/20 to-ganges/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -463,7 +479,7 @@
     </section>
 
     <!-- ===== FEATURED ROOMS WITH STAGGER ANIMATION ===== -->
-    <section id="rooms" class="py-24 bg-warmwhite pattern-bg">
+    <section id="rooms" class="py-24 bg-gradient-to-b from-lotus via-cream to-ivory pattern-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4"
@@ -486,7 +502,7 @@
                         <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80"
                              alt="Ganges View Suite"
                              class="w-full h-full object-cover image-zoom">
-                        <div class="absolute top-4 right-4 bg-saffron text-white px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform">
+                        <div class="absolute top-4 right-4 bg-gradient-to-r from-gold to-saffron text-white px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform shadow-lg">
                             Premium
                         </div>
                     </div>
@@ -516,7 +532,7 @@
                                 <span class="text-2xl font-bold text-saffron">₹4,999</span>
                                 <span class="text-gray-500 text-sm">/night</span>
                             </div>
-                            <a href="#contact" class="bg-ganges text-white px-6 py-2 rounded-full hover:bg-saffron transition-colors font-semibold transform hover:scale-105 shine">
+                            <a href="#contact" class="bg-gradient-to-r from-ganges to-ganges-light text-white px-6 py-2 rounded-full hover:from-saffron hover:to-gold transition-all font-semibold transform hover:scale-105 shine shadow-md">
                                 Book Now
                             </a>
                         </div>
@@ -531,7 +547,7 @@
                         <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80"
                              alt="Heritage Room"
                              class="w-full h-full object-cover image-zoom">
-                        <div class="absolute top-4 right-4 bg-terracotta text-white px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform">
+                        <div class="absolute top-4 right-4 bg-gradient-to-r from-temple-red to-maroon text-white px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform shadow-lg">
                             Popular
                         </div>
                     </div>
@@ -561,7 +577,7 @@
                                 <span class="text-2xl font-bold text-saffron">₹3,499</span>
                                 <span class="text-gray-500 text-sm">/night</span>
                             </div>
-                            <a href="#contact" class="bg-ganges text-white px-6 py-2 rounded-full hover:bg-saffron transition-colors font-semibold transform hover:scale-105 shine">
+                            <a href="#contact" class="bg-gradient-to-r from-ganges to-ganges-light text-white px-6 py-2 rounded-full hover:from-saffron hover:to-gold transition-all font-semibold transform hover:scale-105 shine shadow-md">
                                 Book Now
                             </a>
                         </div>
@@ -576,7 +592,7 @@
                         <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80"
                              alt="Family Sanctuary"
                              class="w-full h-full object-cover image-zoom">
-                        <div class="absolute top-4 right-4 bg-gold text-white px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform">
+                        <div class="absolute top-4 right-4 bg-gradient-to-r from-ganges to-ganges-light text-white px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform shadow-lg">
                             Spacious
                         </div>
                     </div>
@@ -606,7 +622,7 @@
                                 <span class="text-2xl font-bold text-saffron">₹7,999</span>
                                 <span class="text-gray-500 text-sm">/night</span>
                             </div>
-                            <a href="#contact" class="bg-ganges text-white px-6 py-2 rounded-full hover:bg-saffron transition-colors font-semibold transform hover:scale-105 shine">
+                            <a href="#contact" class="bg-gradient-to-r from-ganges to-ganges-light text-white px-6 py-2 rounded-full hover:from-saffron hover:to-gold transition-all font-semibold transform hover:scale-105 shine shadow-md">
                                 Book Now
                             </a>
                         </div>
@@ -626,7 +642,7 @@
     </section>
 
     <!-- ===== EXPERIENCES WITH IMAGE OVERLAYS ===== -->
-    <section id="experiences" class="py-24 bg-white">
+    <section id="experiences" class="py-24 bg-gradient-to-b from-ivory to-cream">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4"
@@ -733,7 +749,7 @@
     </section>
 
     <!-- ===== TESTIMONIALS ===== -->
-    <section class="py-24 bg-warmwhite pattern-bg">
+    <section class="py-24 bg-gradient-to-b from-cream to-lotus pattern-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4"
@@ -863,7 +879,7 @@
     </section>
 
     <!-- ===== GALLERY PREVIEW ===== -->
-    <section id="gallery" class="py-24 bg-white">
+    <section id="gallery" class="py-24 bg-gradient-to-b from-lotus to-ivory">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="font-heading text-4xl md:text-5xl font-bold text-ganges mb-4"
@@ -911,7 +927,8 @@
     </section>
 
     <!-- ===== CONTACT & BOOKING ===== -->
-    <section id="contact" class="py-24 bg-gradient-to-br from-ganges via-ganges/90 to-saffron">
+    <section id="contact" class="py-24 bg-gradient-to-br from-ganges via-maroon to-saffron relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-t from-burgundy/20 to-transparent"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <!-- Left Column - Info -->
@@ -1015,7 +1032,7 @@
                             <textarea rows="3" placeholder="Any special requirements or preferences..." class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-saffron focus:outline-none transition-colors resize-none"></textarea>
                         </div>
 
-                        <button type="submit" class="w-full bg-gradient-to-r from-saffron to-terracotta text-white py-4 rounded-lg font-semibold text-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all shine">
+                        <button type="submit" class="w-full bg-gradient-to-r from-saffron via-temple-red to-maroon text-white py-4 rounded-lg font-semibold text-lg hover:from-gold hover:via-saffron hover:to-temple-red hover:shadow-2xl transform hover:-translate-y-1 transition-all shine">
                             Submit Booking Request
                         </button>
 
@@ -1029,7 +1046,8 @@
     </section>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="bg-darkwood text-white py-12">
+    <footer class="bg-gradient-to-b from-darkwood to-black text-white py-12 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-maroon/10 to-ganges/10"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8 mb-8">
                 <!-- Column 1 - Brand -->
